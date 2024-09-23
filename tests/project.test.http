@@ -1,0 +1,14 @@
+### Utilise le token obtenu pour créer un projet
+POST http://localhost:3000/api/projects
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTcyNzA0OTMyNSwiZXhwIjoxNzI3MDUyOTI1fQ.Mhvp2_7aGl2LTO1QB5uzTocUYfOxBvMPLLFSjdF2hbA
+
+{
+    "title": "Premier projet",
+    "description": "Ceci est un projet de test"
+}
+
+### Vérifie que le projet est bien créé en appelant la route pour récupérer les projets
+GET http://localhost:3000/api/projects
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTcyNzA0OTMyNSwiZXhwIjoxNzI3MDUyOTI1fQ.Mhvp2_7aGl2LTO1QB5uzTocUYfOxBvMPLLFSjdF2hbA
+

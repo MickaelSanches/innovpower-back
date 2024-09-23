@@ -40,3 +40,12 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: 'Erreur lors de la connexion' });
     }
 };
+
+exports.getMe = async (req, res) => {
+    try {
+        const user = await pool.query("SELECT id, email FROM users WHERE id = $1", [req.userId]);
+        res.status(200).json(user.rows[0]); // Retourner les informations de l'utilisateur connecté
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la récupération des informations utilisateur.' });
+    }
+};

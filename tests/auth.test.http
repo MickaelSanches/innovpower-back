@@ -17,3 +17,7 @@ Content-Type: application/json
     "email": "test@example.com",
     "password": "password123"
 }
+
+### Obtenir les informations de l'utilisateur connecté
+GET http://localhost:3000/api/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTcyNzA0ODg5NywiZXhwIjoxNzI3MDUyNDk3fQ.JOThemZ9r6XgshOnwiM20Iqb_mwmSBS5ArlqIDS1VIs
