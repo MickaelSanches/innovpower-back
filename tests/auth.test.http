@@ -1,11 +1,16 @@
-### Enregistrement d'un nouvel utilisateur
+### Tester la route d'inscription (POST /register)
 POST http://localhost:3000/api/register
 Content-Type: application/json
 
 {
     "email": "test@example.com",
-    "password": "password123"
+    "password": "password123",
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone": "0123456789",
+    "siren": "123456789"
 }
+
 
 ###
 

@@ -4,20 +4,25 @@ const pool = require('../db');
 
 // Fonction pour enregistrer un utilisateur
 exports.register = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, first_name, last_name, phone, siren } = req.body;
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
     try {
         const newUser = await pool.query(
-            "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
-            [email, hashedPassword]
+            "INSERT INTO users (email, password, first_name, last_name, phone, siren) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+            [email, hashedPassword, first_name, last_name, phone, siren]
         );
-        res.status(201).json(newUser.rows[0]);
+        
+        const token = jwt.sign({ userId: newUser.rows[0].id }, 'secretkey', { expiresIn: '1h' });
+
+        res.status(201).json({ token, message: 'Inscription réussie', redirect: '/dashboard' });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Erreur lors de l’enregistrement' });
     }
 };
+
 
 // Fonction pour authentifier un utilisateur
 exports.login = async (req, res) => {
@@ -34,8 +39,11 @@ exports.login = async (req, res) => {
             return res.status(401).json({ error: "Mot de passe incorrect" });
         }
 
+        // Générer le token JWT
         const token = jwt.sign({ userId: user.rows[0].id }, 'secretkey', { expiresIn: '1h' });
-        res.status(200).json({ token });
+
+        // Redirection vers le dashboard après la connexion
+        res.status(200).json({ token, message: 'Connexion réussie', redirect: '/dashboard' });
     } catch (error) {
         res.status(500).json({ error: 'Erreur lors de la connexion' });
     }
